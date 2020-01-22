@@ -13,7 +13,7 @@ if { $run_on_lxplus } {
    set guinea_exec /afs/cern.ch/eng/sl/clic-code/lx64slc5/guinea-pig/bin/guinea-old
 } else {
    set script_dir /home/jim/GIT/clic-380gev-ffs-singlebeam-simulations
-   set guinea_exec /home/jogren/bin/guinea
+   set guinea_exec /home/jim/bin/guinea
 }
 
 if {![file exist $script_dir]} {
@@ -41,20 +41,20 @@ set e0 $e_initial
 # beam_case   : which beam to load: 8, 20, 30 (vertical emittance)
 
 array set args {
-    sr 1
-    sigma 10.0
-    sigmaM 10.0
-    sigmak 1e-4
-    sigmaroll 100.0
-    bpmres 0.020
-    deltae 0.001
-    machine 1
-    loadmachine 0
-    measure_response 0
-    wdisp 0.71
-    iterdts 30
-    gaindts 0.5
-    beam_case 20
+   sr 1
+   sigma 10.0
+   sigmaM 10.0
+   sigmak 1e-4
+   sigmaroll 100.0
+   bpmres 0.020
+   deltae 0.001
+   machine 1
+   loadmachine 0
+   measure_response 0
+   wdisp 0.71
+   iterdts 30
+   gaindts 0.5
+   beam_case 20
 }
 
 array set args $argv
@@ -80,11 +80,11 @@ source $script_dir/scripts/make_beam.tcl
 source $script_dir/scripts/wake_calc.tcl
 source $script_dir/scripts/octave_functions.tcl
 source $script_dir/main/beam_parameters.tcl
+source $script_dir/scripts/calc_lumi.tcl
 
 # load lattice and create beams
-source $script_dir/scripts/loadlattice.tcl
-source $script_dir/scripts/createbeams.tcl
-source $script_dir/scripts/calc_lumi.tcl
+source $script_dir/scripts/load_lattice.tcl
+source $script_dir/scripts/create_beams.tcl
 
 # Load beams from integrated simulation
 source $script_dir/scripts/load_beam.tcl
@@ -97,15 +97,20 @@ source $script_dir/scripts/element_indices.tcl
 # Track and compute luminosity of perfect machine
 #############################################################################
 Octave {
-  [E,B] = placet_test_no_correction("test", "beam0t", "None", 1, 0, IP);
-  [L, L0] = get_lumi(B);
-  Lumi = L*352*50/1e4
-  LumiPeak = L0*352*50/1e4
-  L0_over_L = L0/L
+   [E,B] = placet_test_no_correction("test", "beam0t", "None", 1, 0, IP);
+   [L, L0] = get_lumi(B);
+   Lumi = L*352*50/1e4;
+   LumiPeak = L0*352*50/1e4;
+   L0_over_L = L0/L;
 
-  sx_rms = std(B(:,2))
-  sy_rms = std(B(:,3))
+   B_cut = cut_distribution(B,3);
+   sx_rms = 1e3*std(B_cut(:,2));
+   sy_rms = 1e3*std(B_cut(:,3));
 
-  [sx_core, sy_core] = get_core_beam_size(B)
-  save BeamAtIP_${beam_case}.dat B
+   printf("\nPerfect machine:\n")
+   printf("Lumi = \t%g cm^-2s^-1\n", Lumi)
+   printf("Lumi_peak = \t%g cm^-2s^-1\n", LumiPeak)
+   printf("L0_over_L = %g\n", L0_over_L)
+   printf("sx = %g nm\n", sx_rms)
+   printf("sy = %g nm\n", sy_rms)
 }
