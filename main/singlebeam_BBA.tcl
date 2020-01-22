@@ -103,9 +103,6 @@ if { $measure_response } {
 # load target dispersion
 source $script_dir/scripts/load_machine_model.tcl
 
-# Load file with tuning procedures
-source setup_knobs.tcl
-
 source $script_dir/scripts/checkStatus.tcl
 
 # Step 1 misalign the machine
