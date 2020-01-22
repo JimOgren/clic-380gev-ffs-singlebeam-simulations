@@ -103,7 +103,7 @@ if { $measure_response } {
 # load target dispersion
 source $script_dir/scripts/load_machine_model.tcl
 
-source $script_dir/scripts/checkStatus.tcl
+source $script_dir/scripts/check_status.tcl
 
 # Step 1 misalign the machine
 #############################################################################
@@ -141,12 +141,15 @@ proc my_survey { beamline_name } {
 # Misalign the machine
 my_survey "test"
 
-source $script_dir/scripts/checkStatus.tcl
+source $script_dir/scripts/check_status.tcl
+exit
+
+
 save_beamline_status "test" machine_status_misaligned_$machine.dat
 
 # BBA
 ##########################################################
 source beam_based_alignment.tcl
-source $script_dir/scripts/checkStatus.tcl
+source $script_dir/scripts/check_status.tcl
 save_beamline_status "test" machine_status_BBA_$machine.dat
 save_tuning_data tuning_data_BBA_$machine.dat $t_1
