@@ -2,17 +2,23 @@
 #
 # Tuning studies for single beam
 #
-# Written by Jim Ogren at CERN, 2018-2020
+# Written by Jim Ogren, CERN, 2018-2020
 #
 #############################################################################
+global guinea_exec
 set run_on_lxplus 0
 
-set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/SingleBeamTuning_v03
-#set script_dir /home/jogren/cernbox/TuningStudies/CLIC_FFS_380GeV/SingleBeamTuning_v03
+if { $run_on_lxplus } {
+   set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/
+   set guinea_exec /afs/cern.ch/eng/sl/clic-code/lx64slc5/guinea-pig/bin/guinea-old
+} else {
+   set script_dir /home/jim/GIT/clic-380gev-ffs-singlebeam-simulations
+   set guinea_exec /home/jogren/bin/guinea
+}
 
 if {![file exist $script_dir]} {
-    puts "script_dir path does not exist"
-    set script_dir [pwd]/..
+    puts "script_dir path does not exist!"
+    exit
 }
 
 set e_initial 190
@@ -76,8 +82,8 @@ source $script_dir/scripts/octave_functions.tcl
 source $script_dir/main/beam_parameters.tcl
 
 # load lattice and create beams
-source $script_dir/main/loadlattice.tcl
-source $script_dir/main/createbeams.tcl
+source $script_dir/scripts/loadlattice.tcl
+source $script_dir/scripts/createbeams.tcl
 source $script_dir/scripts/calc_lumi.tcl
 
 # Load beams from integrated simulation
@@ -88,6 +94,7 @@ FirstOrder 1
 # Go through lattice file and find indices for different elements:
 source $script_dir/scripts/element_indices.tcl
 
+# Track and compute luminosity of perfect machine
 #############################################################################
 Octave {
   [E,B] = placet_test_no_correction("test", "beam0t", "None", 1, 0, IP);
