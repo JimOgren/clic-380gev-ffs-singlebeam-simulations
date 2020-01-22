@@ -108,9 +108,9 @@ Octave {
    sy_rms = 1e3*std(B_cut(:,3));
 
    printf("\nPerfect machine:\n")
-   printf("Lumi = \t%g cm^-2s^-1\n", Lumi)
-   printf("Lumi_peak = \t%g cm^-2s^-1\n", LumiPeak)
-   printf("L0_over_L = %g\n", L0_over_L)
-   printf("sx = %g nm\n", sx_rms)
-   printf("sy = %g nm\n", sy_rms)
+   printf("Lumi \t\t= %10.3g cm^-2s^-1\n", Lumi)
+   printf("Lumi_peak \t= %10.3g cm^-2s^-1\n", LumiPeak)
+   printf("L0_over_L \t= %10.3g\n", L0_over_L)
+   printf("sx \t\t= %10.3g nm\n", sx_rms)
+   printf("sy \t\t= %10.3g nm\n", sy_rms)
 }
