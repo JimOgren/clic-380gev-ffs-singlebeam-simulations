@@ -18,9 +18,20 @@ if { $run_on_lxplus } {
    set guinea_exec /home/jim/bin/guinea
 }
 
+set res_dir $script_dir/main/Results
+set save_dir $res_dir/BBA
+
+# Check if folders exist
 if {![file exist $script_dir]} {
-    puts "script_dir path does not exist!"
-    exit
+   puts "script_dir path does not exist!"
+   exit
+}
+
+if {![file exist $res_dir]} {
+   exec bash -c "mkdir -p $res_dir"
+}
+if {![file exist $save_dir]} {
+   exec bash -c "mkdir -p $save_dir"
 }
 
 set e_initial 190
@@ -142,14 +153,12 @@ proc my_survey { beamline_name } {
 my_survey "test"
 
 source $script_dir/scripts/check_status.tcl
+save_beamline_status "test" $save_dir/machine_status_misaligned_$machine.dat
 exit
-
-
-save_beamline_status "test" machine_status_misaligned_$machine.dat
-
 # BBA
 ##########################################################
 source beam_based_alignment.tcl
 source $script_dir/scripts/check_status.tcl
+
 save_beamline_status "test" machine_status_BBA_$machine.dat
 save_tuning_data tuning_data_BBA_$machine.dat $t_1
