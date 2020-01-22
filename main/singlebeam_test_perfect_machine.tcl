@@ -2,13 +2,10 @@
 #
 # Tuning studies for single beam
 #
+# Written by Jim Ogren at CERN, 2018-2020
+#
 #############################################################################
-ParallelThreads -num 4
-
-set t_1 [clock seconds]
-
-set e_initial 190
-set e0 $e_initial
+set run_on_lxplus 0
 
 set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/SingleBeamTuning_v03
 #set script_dir /home/jogren/cernbox/TuningStudies/CLIC_FFS_380GeV/SingleBeamTuning_v03
@@ -18,6 +15,9 @@ if {![file exist $script_dir]} {
     set script_dir [pwd]/..
 }
 
+set e_initial 190
+set e0 $e_initial
+#############################################################################
 # command-line options
 # sr          : synchrotron radiation on/off
 # sigma       : misalignment in um
@@ -102,5 +102,3 @@ Octave {
   [sx_core, sy_core] = get_core_beam_size(B)
   save BeamAtIP_${beam_case}.dat B
 }
-
-
