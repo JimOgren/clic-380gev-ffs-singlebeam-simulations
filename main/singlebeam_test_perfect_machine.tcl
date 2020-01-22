@@ -6,10 +6,10 @@
 #
 #############################################################################
 global guinea_exec
-set run_on_lxplus 0
+set run_on_lxplus 1
 
 if { $run_on_lxplus } {
-   set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/
+   set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/Clean_scripts/clic-380gev-ffs-singlebeam-simulations
    set guinea_exec /afs/cern.ch/eng/sl/clic-code/lx64slc5/guinea-pig/bin/guinea-old
 } else {
    set script_dir /home/jim/GIT/clic-380gev-ffs-singlebeam-simulations
