@@ -6,143 +6,143 @@
 ################################################################
 # measure dispersion (imperfect BPMs)
 Octave {
-  function Eta = MeasureDispersion(Beamline, Beam1, Beam2, delta, BI)
-    placet_test_no_correction(Beamline, Beam2, "None"); Eta  = placet_get_bpm_readings(Beamline, BI);
-    placet_test_no_correction(Beamline, Beam1, "None"); Eta -= placet_get_bpm_readings(Beamline, BI);
-    Eta /= 2 * delta;
-  end
+   function Eta = MeasureDispersion(Beamline, Beam1, Beam2, delta, BI)
+      placet_test_no_correction(Beamline, Beam2, "None"); Eta  = placet_get_bpm_readings(Beamline, BI);
+      placet_test_no_correction(Beamline, Beam1, "None"); Eta -= placet_get_bpm_readings(Beamline, BI);
+      Eta /= 2 * delta;
+   end
 }
 
 # check dispersion (perfect BPMs)
 Octave {
-  function Eta = CheckDispersion(Beamline, Beam1, Beam2, delta, BI)
-    placet_element_set_attribute(Beamline, BI, "resolution", 0.0);
-    BIx = placet_element_get_attribute(Beamline, BI, "x");
-    BIy = placet_element_get_attribute(Beamline, BI, "y");
-    BIr = placet_element_get_attribute(Beamline, BI, "roll");
-    placet_element_set_attribute(Beamline, BI, "x", 0.0);
-    placet_element_set_attribute(Beamline, BI, "y", 0.0);
-    placet_element_set_attribute(Beamline, BI, "roll", 0.0);
+   function Eta = CheckDispersion(Beamline, Beam1, Beam2, delta, BI)
+      placet_element_set_attribute(Beamline, BI, "resolution", 0.0);
+      BIx = placet_element_get_attribute(Beamline, BI, "x");
+      BIy = placet_element_get_attribute(Beamline, BI, "y");
+      BIr = placet_element_get_attribute(Beamline, BI, "roll");
+      placet_element_set_attribute(Beamline, BI, "x", 0.0);
+      placet_element_set_attribute(Beamline, BI, "y", 0.0);
+      placet_element_set_attribute(Beamline, BI, "roll", 0.0);
 
-    try
-	placet_test_no_correction(Beamline, Beam2, "None"); Eta  = placet_get_bpm_readings(Beamline, BI);
-	placet_test_no_correction(Beamline, Beam1, "None"); Eta -= placet_get_bpm_readings(Beamline, BI);
-	Eta /= 2 * delta;
-    catch
-	disp("Beam is probably lost");
-     	Eta = 1e4*ones(length(BI),2);
-    end
-
-    placet_element_set_attribute(Beamline, BI, "x", BIx);
-    placet_element_set_attribute(Beamline, BI, "y", BIy);
-    placet_element_set_attribute(Beamline, BI, "roll", BIr);
-    placet_element_set_attribute(Beamline, BI, "resolution", $bpmres);
-  end
-}
-
-Octave {
-  function Eta = CheckDispersion2(Beamline, Beam1, Beam2, delta, Inds)
-    Eta = zeros(length(Inds),2);
-    for j = 1:length(Inds)
-      [E,B] = placet_test_no_correction(Beamline, Beam2, "None", 1, 0, Inds(j));
-      Eta(j,1) = mean(B(:,2));
-      Eta(j,2) = mean(B(:,3));
-      [E,B] = placet_test_no_correction(Beamline, Beam1, "None", 1, 0, Inds(j));
-      Eta(j,1) = Eta(j,1) - mean(B(:,2));
-      Eta(j,2) = Eta(j,2) - mean(B(:,3));
-    end
-    Eta /= 2 * delta;
-  end
-}
-
-Octave {
-  function [] = displayElementStatus(beamline,indices)
-    fprintf("\nIndex\tName\tx\t\ty\t\troll\t\tstrengt\n");
-    switch nargin
-      case 1
-        indices = 1:placet_get_name_number_list(beamline, "IP");
-    end
-
-    for j = 1:length(indices)
-      fprintf("%i",j)
-      fprintf("\t%s", placet_element_get_attribute(beamline, indices(j), "name"))
-      fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "x"))
-      fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "y"))
-      fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "roll"))
-      typ = placet_element_get_attribute(beamline, indices(j),"type_name");
-      switch typ
-        case "quadrupole"
-          fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "strength"));
-        case "multipole"
-          fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "strength"));
+      try
+         placet_test_no_correction(Beamline, Beam2, "None"); Eta  = placet_get_bpm_readings(Beamline, BI);
+         placet_test_no_correction(Beamline, Beam1, "None"); Eta -= placet_get_bpm_readings(Beamline, BI);
+         Eta /= 2 * delta;
+      catch
+         disp("Beam is probably lost");
+         Eta = 1e4*ones(length(BI),2);
       end
-      fprintf("\n");
-    end
-  end
+
+      placet_element_set_attribute(Beamline, BI, "x", BIx);
+      placet_element_set_attribute(Beamline, BI, "y", BIy);
+      placet_element_set_attribute(Beamline, BI, "roll", BIr);
+      placet_element_set_attribute(Beamline, BI, "resolution", $bpmres);
+   end
 }
 
 Octave {
-  function chi2 = getTotalOffset(beamline,indices,prop)
-    chi2 = 0;
-    for j = 1:length(indices)
-      temp = placet_element_get_attribute(beamline, indices(j), prop);
-      chi2 = chi2 + temp^2;
-    end
-  end
+   function Eta = CheckDispersion2(Beamline, Beam1, Beam2, delta, Inds)
+      Eta = zeros(length(Inds),2);
+      for j = 1:length(Inds)
+         [E,B] = placet_test_no_correction(Beamline, Beam2, "None", 1, 0, Inds(j));
+         Eta(j,1) = mean(B(:,2));
+         Eta(j,2) = mean(B(:,3));
+         [E,B] = placet_test_no_correction(Beamline, Beam1, "None", 1, 0, Inds(j));
+         Eta(j,1) = Eta(j,1) - mean(B(:,2));
+         Eta(j,2) = Eta(j,2) - mean(B(:,3));
+      end
+      Eta /= 2 * delta;
+   end
 }
 
 Octave {
-  function [stdx, stdy] = checkAlignment(beamline, beam, indices)
-    xlem = zeros(size(indices));
-    ylem = zeros(size(indices));
-    xbeam = zeros(size(indices));
-    ybeam = zeros(size(indices));
-    xdiff = zeros(size(indices));
-    ydiff = zeros(size(indices));
-    try
-       for j = 1:length(indices)
-         xelem(j) = placet_element_get_attribute(beamline, indices(j), "x");
-         yelem(j) = placet_element_get_attribute(beamline, indices(j), "y");
-         [E,B] = placet_test_no_correction(beamline, beam, "None", 1, 0, indices(j));
-         xbeam(j) = mean(B(:,2));
-         ybeam(j) = mean(B(:,3));
-         diffx(j) = xelem(j) - xbeam(j);
-         diffy(j) = yelem(j) - ybeam(j);
-       end
-       disp('diff_x - diff_y - beam_x - beam_y')
-       [diffx', diffy', xbeam', ybeam']
-       stdx = sqrt(sum(diffx.^2));
-       stdy = sqrt(sum(diffy.^2));
-    catch
-        disp("Beam is probably lost");
-        stdx = 1e4;
-        stdy = 1e4;
-    end
-  end
+   function [] = displayElementStatus(beamline,indices)
+      fprintf("\nIndex\tName\tx\t\ty\t\troll\t\tstrengt\n");
+      switch nargin
+         case 1
+         indices = 1:placet_get_name_number_list(beamline, "IP");
+      end
+
+      for j = 1:length(indices)
+         fprintf("%i",j)
+         fprintf("\t%s", placet_element_get_attribute(beamline, indices(j), "name"))
+         fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "x"))
+         fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "y"))
+         fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "roll"))
+         typ = placet_element_get_attribute(beamline, indices(j),"type_name");
+         switch typ
+            case "quadrupole"
+               fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "strength"));
+            case "multipole"
+               fprintf("\t%e", placet_element_get_attribute(beamline, indices(j), "strength"));
+            end
+         fprintf("\n");
+      end
+   end
 }
 
 Octave {
-  function [diffx, diffy] = getAlignment(beamline, beam, indices)
-    xlem = zeros(size(indices));
-    ylem = zeros(size(indices));
-    xbeam = zeros(size(indices));
-    ybeam = zeros(size(indices));
-    xdiff = zeros(size(indices));
-    ydiff = zeros(size(indices));
-    try
-       for j = 1:length(indices)
-         xelem(j) = placet_element_get_attribute(beamline, indices(j), "x");
-         yelem(j) = placet_element_get_attribute(beamline, indices(j), "y");
-         [E,B] = placet_test_no_correction(beamline, beam, "None", 1, 0, indices(j));
-         xbeam(j) = mean(B(:,2));
-         ybeam(j) = mean(B(:,3));
-         diffx(j) = xelem(j) - xbeam(j);
-         diffy(j) = yelem(j) - ybeam(j);
-       end
-    catch
-        disp("Beam is probably lost");
-    end
-  end
+   function chi2 = getTotalOffset(beamline,indices,prop)
+      chi2 = 0;
+      for j = 1:length(indices)
+         temp = placet_element_get_attribute(beamline, indices(j), prop);
+         chi2 = chi2 + temp^2;
+      end
+   end
+}
+
+Octave {
+   function [stdx, stdy] = checkAlignment(beamline, beam, indices)
+      xlem = zeros(size(indices));
+      ylem = zeros(size(indices));
+      xbeam = zeros(size(indices));
+      ybeam = zeros(size(indices));
+      xdiff = zeros(size(indices));
+      ydiff = zeros(size(indices));
+      try
+         for j = 1:length(indices)
+            xelem(j) = placet_element_get_attribute(beamline, indices(j), "x");
+            yelem(j) = placet_element_get_attribute(beamline, indices(j), "y");
+            [E,B] = placet_test_no_correction(beamline, beam, "None", 1, 0, indices(j));
+            xbeam(j) = mean(B(:,2));
+            ybeam(j) = mean(B(:,3));
+            diffx(j) = xelem(j) - xbeam(j);
+            diffy(j) = yelem(j) - ybeam(j);
+         end
+         disp('diff_x - diff_y - beam_x - beam_y')
+         [diffx', diffy', xbeam', ybeam']
+         stdx = sqrt(sum(diffx.^2));
+         stdy = sqrt(sum(diffy.^2));
+      catch
+         disp("Beam is probably lost");
+         stdx = 1e4;
+         stdy = 1e4;
+      end
+   end
+}
+
+Octave {
+   function [diffx, diffy] = getAlignment(beamline, beam, indices)
+      xlem = zeros(size(indices));
+      ylem = zeros(size(indices));
+      xbeam = zeros(size(indices));
+      ybeam = zeros(size(indices));
+      xdiff = zeros(size(indices));
+      ydiff = zeros(size(indices));
+      try
+         for j = 1:length(indices)
+            xelem(j) = placet_element_get_attribute(beamline, indices(j), "x");
+            yelem(j) = placet_element_get_attribute(beamline, indices(j), "y");
+            [E,B] = placet_test_no_correction(beamline, beam, "None", 1, 0, indices(j));
+            xbeam(j) = mean(B(:,2));
+            ybeam(j) = mean(B(:,3));
+            diffx(j) = xelem(j) - xbeam(j);
+            diffy(j) = yelem(j) - ybeam(j);
+         end
+      catch
+         disp("Beam is probably lost");
+      end
+   end
 }
 
 
@@ -245,43 +245,43 @@ Octave {
 ################################################################
 # Cut beam distribition at k times original rms
 Octave {
-function [Bout] = cut_distribution(B,k)
-  # Cut distribution in all dimension at +/- k*sigma_rms
-  logvec1 = (B(:,1) > mean(B(:,1))-k*std(B(:,1))) .* (B(:,1) < mean(B(:,1))+k*std(B(:,1)));
-  logvec2 = (B(:,2) > mean(B(:,2))-k*std(B(:,2))) .* (B(:,2) < mean(B(:,2))+k*std(B(:,2)));
-  logvec3 = (B(:,3) > mean(B(:,3))-k*std(B(:,3))) .* (B(:,3) < mean(B(:,3))+k*std(B(:,3)));
-  logvec4 = (B(:,4) > mean(B(:,4))-k*std(B(:,4))) .* (B(:,4) < mean(B(:,4))+k*std(B(:,4)));
-  logvec5 = (B(:,5) > mean(B(:,5))-k*std(B(:,5))) .* (B(:,5) < mean(B(:,5))+k*std(B(:,5)));
-  logvec6 = (B(:,6) > mean(B(:,6))-k*std(B(:,6))) .* (B(:,6) < mean(B(:,6))+k*std(B(:,6)));
-  logvec = logical(logvec1.*logvec2.*logvec3.*logvec4.*logvec5.*logvec6);
-  Bout = B(logvec,:);
-end
+   function [Bout] = cut_distribution(B,k)
+      # Cut distribution in all dimension at +/- k*sigma_rms
+      logvec1 = (B(:,1) > mean(B(:,1))-k*std(B(:,1))) .* (B(:,1) < mean(B(:,1))+k*std(B(:,1)));
+      logvec2 = (B(:,2) > mean(B(:,2))-k*std(B(:,2))) .* (B(:,2) < mean(B(:,2))+k*std(B(:,2)));
+      logvec3 = (B(:,3) > mean(B(:,3))-k*std(B(:,3))) .* (B(:,3) < mean(B(:,3))+k*std(B(:,3)));
+      logvec4 = (B(:,4) > mean(B(:,4))-k*std(B(:,4))) .* (B(:,4) < mean(B(:,4))+k*std(B(:,4)));
+      logvec5 = (B(:,5) > mean(B(:,5))-k*std(B(:,5))) .* (B(:,5) < mean(B(:,5))+k*std(B(:,5)));
+      logvec6 = (B(:,6) > mean(B(:,6))-k*std(B(:,6))) .* (B(:,6) < mean(B(:,6))+k*std(B(:,6)));
+      logvec = logical(logvec1.*logvec2.*logvec3.*logvec4.*logvec5.*logvec6);
+      Bout = B(logvec,:);
+   end
 }
 
 ################################################################
 # Perform waist scan
 Octave {
-function [dx, dy, sx, sy, l] = waist_scan(B)
-  l = linspace(-600e-6, 600e-6, 1001);
-  sx = zeros(size(l));
-  sy = zeros(size(l));
+   function [dx, dy, sx, sy, l] = waist_scan(B)
+      l = linspace(-600e-6, 600e-6, 1001);
+      sx = zeros(size(l));
+      sy = zeros(size(l));
 
-  # Calculate beam matrix
-  CM = cov(B);
-  R = eye(6);
+      # Calculate beam matrix
+      CM = cov(B);
+      R = eye(6);
 
-  # propagate beam matrix
-  data = [];
-  for i = 1:length(l)
-     R(2,5) = l(i); R(3,6) = l(i);
-     CM2 = R*CM*transpose(R);
-     sx(i) = sqrt(CM2(2,2));
-     sy(i) = sqrt(CM2(3,3));
-  end
+      # propagate beam matrix
+      data = [];
+      for i = 1:length(l)
+         R(2,5) = l(i); R(3,6) = l(i);
+         CM2 = R*CM*transpose(R);
+         sx(i) = sqrt(CM2(2,2));
+         sy(i) = sqrt(CM2(3,3));
+      end
 
-  [mx,ix] = min(sx);
-  [my,iy] = min(sy);
-  dx = l(ix); # distance to minimum waist_x
-  dy = l(iy); # distance to minimum waist_y
-end
+      [mx,ix] = min(sx);
+      [my,iy] = min(sy);
+      dx = l(ix); # distance to minimum waist_x
+      dy = l(iy); # distance to minimum waist_y
+   end
 }
