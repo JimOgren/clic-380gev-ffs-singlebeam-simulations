@@ -2,22 +2,30 @@
 #
 # Tuning studies for single beam
 #
+# Step 0: beam-based alignment
+#
+# Written by Jim Ogren, CERN, 2018-2020
+#
 #############################################################################
-ParallelThreads -num 4
+global guinea_exec
+set run_on_lxplus 0
 
-set t_1 [clock seconds]
+if { $run_on_lxplus } {
+   set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/Clean_scripts/clic-380gev-ffs-singlebeam-simulations
+   set guinea_exec /afs/cern.ch/eng/sl/clic-code/lx64slc5/guinea-pig/bin/guinea-old
+} else {
+   set script_dir /home/jim/GIT/clic-380gev-ffs-singlebeam-simulations
+   set guinea_exec /home/jim/bin/guinea
+}
+
+if {![file exist $script_dir]} {
+    puts "script_dir path does not exist!"
+    exit
+}
 
 set e_initial 190
 set e0 $e_initial
-
-set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/SingleBeamTuning_v03
-#set script_dir /home/jogren/cernbox/TuningStudies/CLIC_FFS_380GeV/SingleBeamTuning_v03
-
-if {![file exist $script_dir]} {
-    puts "script_dir path does not exist"
-    set script_dir [pwd]/..
-}
-
+#############################################################################
 # command-line options
 # sr          : synchrotron radiation on/off
 # sigma       : misalignment in um
@@ -35,20 +43,20 @@ if {![file exist $script_dir]} {
 # beam_case   : which beam to load: 8, 20, 30 (vertical emittance)
 
 array set args {
-    sr 1
-    sigma 10.0
-    sigmaM 10.0
-    sigmak 1e-4
-    sigmaroll 100.0
-    bpmres 0.020
-    deltae 0.001
-    machine 1
-    loadmachine 0
-    measure_response 0
-    wdisp 0.71
-    iterdts 30
-    gaindts 0.5
-    beam_case 20
+   sr 1
+   sigma 10.0
+   sigmaM 10.0
+   sigmak 1e-4
+   sigmaroll 100.0
+   bpmres 0.020
+   deltae 0.001
+   machine 1
+   loadmachine 0
+   measure_response 0
+   wdisp 0.71
+   iterdts 30
+   gaindts 0.5
+   beam_case 20
 }
 
 array set args $argv
@@ -74,13 +82,13 @@ source $script_dir/scripts/make_beam.tcl
 source $script_dir/scripts/wake_calc.tcl
 source $script_dir/scripts/octave_functions.tcl
 source $script_dir/main/beam_parameters.tcl
-
-# load lattice and create beams
-source $script_dir/main/loadlattice.tcl
-source $script_dir/main/createbeams.tcl
 source $script_dir/scripts/calc_lumi.tcl
 
-# Load beam from integrated simulation
+# load lattice and create beams
+source $script_dir/scripts/load_lattice.tcl
+source $script_dir/scripts/create_beams.tcl
+
+# Load beams from integrated simulation
 source $script_dir/scripts/load_beam.tcl
 
 FirstOrder 1
@@ -92,7 +100,7 @@ source $script_dir/scripts/element_indices.tcl
 if { $measure_response } {
    source $script_dir/scripts/measure_nominal_dispersion.tcl
 }
-# load target dispersion 
+# load target dispersion
 source $script_dir/scripts/load_machine_model.tcl
 
 # Load file with tuning procedures
@@ -145,4 +153,3 @@ source beam_based_alignment.tcl
 source $script_dir/scripts/checkStatus.tcl
 save_beamline_status "test" machine_status_BBA_$machine.dat
 save_tuning_data tuning_data_BBA_$machine.dat $t_1
-

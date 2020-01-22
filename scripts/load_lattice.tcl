@@ -12,8 +12,7 @@ SetReferenceEnergy $e0
 
 
 set lattices_file $script_dir/lattices/ffs_clic380gev_l6m_bx8_disp60.tcl
-puts "Load lattice file:"
-puts $lattices_file
+puts "Load lattice file: $lattices_file"
 source $lattices_file
 
 # Add BPM at IP, drift and BPM on other side
