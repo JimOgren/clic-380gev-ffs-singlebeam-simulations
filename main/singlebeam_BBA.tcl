@@ -20,7 +20,7 @@ if { $run_on_lxplus } {
 }
 
 set res_dir $script_dir/main/Results
-set save_dir $res_dir/BBA
+set save_dir $res_dir/Results_BBA
 
 # Check if folders exist
 if {![file exist $script_dir]} {
