@@ -62,7 +62,6 @@ Octave {
       RMyy /= 2*LEV;
 
       RM = [RMxx, RMxy; RMyx, RMyy];
-      #RM = [RMxx, zeros(size(RMxy)); zeros(size(RMyx)), RMyy];
    end
 }
 
@@ -155,8 +154,7 @@ Octave {
       RMxy /= 2*LEV;
       RMyy /= 2*LEV;
 
-      RM = [RMxx, RMxy; RMyx, RMyy];
-      #RM = [RMxx, zeros(size(RMxy)); zeros(size(RMyx)), RMyy];
+      RM = [RMxx, RMxy; RMyx, RMyy];      
    end
 }
 
