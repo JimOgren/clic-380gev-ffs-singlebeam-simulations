@@ -150,7 +150,7 @@ proc align_sextupoles_reverse { range } {
 # Load Knobs-file
 ##########################################################
 Octave {
-   load 'Knobs_sr_${sr}.dat'
+   load $script_dir/matrices/Knobs_sr_${sr}.dat
    global Knobs_sext Knobs_oct;
    Knobs_sext = Knobs_sextupole;
    Knobs_oct = Knobs_octupole;
