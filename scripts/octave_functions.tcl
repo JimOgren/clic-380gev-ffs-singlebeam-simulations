@@ -185,7 +185,7 @@ proc save_tuning_data { file_name t_1 } {
       t_sim = ($t_2 - $t_1)/60;
       disp(['Total simulation time = ', num2str(t_sim), ' minutes']);
 
-      save $file_name Lumivec LumiPeakvec Lmeasvec sxvec syvec Evec EwMvec misQvec misMvec wrtbQvec wrtbMvec Lmeas Beam_input
+      save $file_name Lumivec LumiPeakvec Lmeasvec sxvec syvec Evec EwMvec misQvec misMvec wrtbQvec wrtbMvec Lmeas t_sim
    }
 }
 

@@ -197,6 +197,8 @@ Octave {
 # Procedure for executing dispersion target steering
 #############################################################
 proc run_beam_based_alignment { } {
+   global wdisp iterdts gaindts deltae
+   puts "\nPerforming beam-based alignment on $beamline beamline"
    # Measure response matrices on actual machine:
    Octave {
       disp('Measure the BBA response matrix');
@@ -287,6 +289,8 @@ proc run_beam_based_alignment { } {
 # Procedure for executing dispersion target steering, multiparticle beam
 #############################################################
 proc run_beam_based_alignment_multiparticle { } {
+   global wdisp iterdts gaindts deltae
+   puts "\nPerforming beam-based alignment on $beamline beamline using multiparicle beam"
    # Measure response matrices on actual machine:
    Octave {
       disp('Measure the BBA response matrix');

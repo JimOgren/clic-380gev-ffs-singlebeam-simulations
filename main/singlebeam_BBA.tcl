@@ -7,6 +7,7 @@
 # Written by Jim Ogren, CERN, 2018-2020
 #
 #############################################################################
+set t_1 [clock seconds]
 global guinea_exec
 set run_on_lxplus 0
 
@@ -164,9 +165,8 @@ save_beamline_status "test" $save_dir/machine_status_misaligned_$machine.dat
 
 # Run BBA
 run_beam_based_alignment
-
-
 source $script_dir/scripts/check_status.tcl
 
+# Save beamline and tuning data
 save_beamline_status "test" $save_dir/machine_status_BBA_$machine.dat
-save_tuning_data $save_dir/tuning_data_BBA_$machine.dat
+save_tuning_data $save_dir/tuning_data_BBA_$machine.dat $t_1
