@@ -5,4 +5,4 @@
 mkdir -p temp_run
 cd temp_run
 cp ../singlebeam_BBA.tcl .
-placet singlebeam_BBA.tcl machine 1
+placet singlebeam_BBA.tcl machine $1

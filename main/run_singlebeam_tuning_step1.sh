@@ -5,4 +5,4 @@
 mkdir -p temp_run
 cd temp_run
 cp ../singlebeam_tuning_step1.tcl .
-placet singlebeam_tuning_step1.tcl machine 1
+placet singlebeam_tuning_step1.tcl machine $1
