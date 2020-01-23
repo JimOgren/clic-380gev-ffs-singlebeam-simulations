@@ -104,7 +104,7 @@ proc align_sextupoles { range } {
          Octave {
             [x, fmin, eval_num] = fmin_inverse_parabola("test_move_sextupole${knob}${axis}", -$range, 0.0, $range, 3);
             move_sextupole${knob}${axis}(x);
-            Lmeas += eval_num
+            Lmeas = Lmeas + eval_num;
          }
       }
 
@@ -112,7 +112,7 @@ proc align_sextupoles { range } {
          Octave {
             [x, fmin, eval_num] = fmin_inverse_parabola("test_move_sextupole${knob}${axis}", -$range/20, 0.0, $range/20, 5);
             move_sextupole${knob}${axis}(x);
-            Lmeas += eval_num;
+            Lmeas = Lmeas + eval_num;
          }
       }
    }
@@ -133,7 +133,7 @@ proc align_sextupoles_reverse { range } {
          Octave {
             [x, fmin, eval_num] = fmin_inverse_parabola("test_move_sextupole${knob}${axis}", -$range, 0.0, $range, 3);
             move_sextupole${knob}${axis}(x);
-            Lmeas += eval_num
+            Lmeas = Lmeas + eval_num;
          }
       }
 
@@ -141,7 +141,7 @@ proc align_sextupoles_reverse { range } {
          Octave {
             [x, fmin, eval_num] = fmin_inverse_parabola("test_move_sextupole${knob}${axis}", -$range/20, 0.0, $range/20, 5);
             move_sextupole${knob}${axis}(x);
-            Lmeas += eval_num;
+            Lmeas = Lmeas + eval_num;
          }
       }
    }
@@ -193,7 +193,7 @@ proc sextupole_knobs { range } {
          Octave {
             [x, fmin, eval_num] = fmin_inverse_parabola("test_sextupole_knob${knob}${axis}", -$range, 0.0, $range);
             vary_sextupole_knob${knob}${axis}(x);
-            Lmeas += eval_num;
+            Lmeas = Lmeas + eval_num;
          }
       }
    }
@@ -242,7 +242,7 @@ proc octupole_knobs { range } {
          Octave {
             [x, fmin, eval_num] = fmin_inverse_parabola("test_octupole_knob${knob}${axis}", -$range, 0.0, $range);
             vary_octupole_knob${knob}${axis}(x);
-            Lmeas += eval_num;
+            Lmeas = Lmeas + eval_num;
          }
       }
    }
