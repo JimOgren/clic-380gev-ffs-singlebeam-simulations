@@ -41,7 +41,7 @@ Octave {
    disp('Dispersion target WITHOUT multipoles')
    MStemp = placet_element_get_attribute("test", MI, "strength");
    placet_element_set_attribute("test", MI, "strength", complex(0.0,0.0));
-   eta_meas_arr = CheckDispersion("test", "beam1", "beam2", $deltae, BI);
+   eta_meas_arr = CheckDispersion("test", "beam1t", "beam2t", $deltae, BI);
    eta_meas = [eta_meas_arr(:,1); eta_meas_arr(:,2)];
    [eta0_arr, eta_meas_arr, abs(eta0_arr - eta_meas_arr)]
    stdE = [sqrt(sum((eta_meas_arr(:,1) - eta0_arr(:,1)).^2)), ...
@@ -50,7 +50,7 @@ Octave {
 
    placet_element_set_attribute("test", MI, "strength", complex(MStemp,0.0));
    disp('Dispersion target WITH multipoles')
-   eta_meas_arr = CheckDispersion("test", "beam1", "beam2", $deltae, BI);
+   eta_meas_arr = CheckDispersion("test", "beam1t", "beam2t", $deltae, BI);
    eta_meas = [eta_meas_arr(:,1); eta_meas_arr(:,2)];
    [eta1_arr, eta_meas_arr, abs(eta1_arr - eta_meas_arr)]
    stdEwM = [sqrt(sum((eta_meas_arr(:,1) - eta1_arr(:,1)).^2)), ...

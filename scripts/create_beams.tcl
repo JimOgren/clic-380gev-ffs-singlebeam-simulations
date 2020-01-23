@@ -33,7 +33,7 @@ set n_total [expr $n_slice*$n]
 
 make_beam_many beam0t $n_slice $n
 
-set create_multiparicle_off_energy 0
+set create_multiparicle_off_energy 1
 if { $create_multiparicle_off_energy } {
    make_beam_many_energy beam2t $n_slice $n [expr 1.0 + $deltae]
    make_beam_many_energy beam1t $n_slice $n [expr 1.0 - $deltae]

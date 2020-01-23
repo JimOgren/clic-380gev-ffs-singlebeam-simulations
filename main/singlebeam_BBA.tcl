@@ -164,7 +164,7 @@ source $script_dir/scripts/check_status.tcl
 save_beamline_status "test" $save_dir/machine_status_misaligned_$machine.dat
 
 # Run BBA
-run_beam_based_alignment
+run_beam_based_alignment_multiparticle
 source $script_dir/scripts/check_status.tcl
 
 # Save beamline and tuning data
