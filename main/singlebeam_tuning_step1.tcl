@@ -116,7 +116,7 @@ source $script_dir/scripts/setup_knobs.tcl
 
 # Load machine after BBA
 #############################################################################
-load_beamline_status "test" $res_dir/BBA/machine_status_BBA_$machine.dat
+load_beamline_status "test" $res_dir/Results_BBA/machine_status_$machine.dat
 source $script_dir/scripts/check_status.tcl
 
 # Align and tune sextupoles (transverse position)
