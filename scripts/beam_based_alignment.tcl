@@ -198,7 +198,7 @@ Octave {
 #############################################################
 proc run_beam_based_alignment { } {
    global wdisp iterdts gaindts deltae
-   puts "\nPerforming beam-based alignment on $beamline beamline"
+   puts "\nPerforming beam-based alignment"
    # Measure response matrices on actual machine:
    Octave {
       disp('Measure the BBA response matrix');
@@ -290,7 +290,7 @@ proc run_beam_based_alignment { } {
 #############################################################
 proc run_beam_based_alignment_multiparticle { } {
    global wdisp iterdts gaindts deltae
-   puts "\nPerforming beam-based alignment on $beamline beamline using multiparicle beam"
+   puts "\nPerforming beam-based alignment using multiparicle beam"
    # Measure response matrices on actual machine:
    Octave {
       disp('Measure the BBA response matrix');
