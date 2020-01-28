@@ -1,0 +1,15 @@
+executable			= run_updated2_tuning_step1.sh
+arguments			= $(arg1)
+#arguments			= 94
+
++JobFlavour		= "testmatch"
+
+output					= my_updated2_tuning_step1.$(ClusterId).$(ProcId).out
+error						= my_updated2_tuning_step1.$(ClusterId).$(ProcId).err
+log							= my_updated2_tuning_step1.$(ClusterId).log
+
+should_transfer_files = IF_NEEDED
+transfer_output_files = ""
+
+queue arg1 from input_perfect.txt
+#queue
