@@ -9,7 +9,7 @@
 #############################################################################
 set t_1 [clock seconds]
 global guinea_exec
-set run_on_lxplus 0
+set run_on_lxplus 1
 
 if { $run_on_lxplus } {
    set script_dir /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/Clean_scripts/clic-380gev-ffs-singlebeam-simulations
