@@ -1,3 +1,6 @@
 main/temp_run/
 main/Results/
 main/log_*
+integrated_simulation/temp_run/
+integrated_simulation/Results/
+integrated_simulation/log_*
