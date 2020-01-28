@@ -1,5 +1,7 @@
-#!/bin/bash
-# setup placet etc.
-source /cvmfs/clicbp.cern.ch/x86_64-slc6-gcc62-opt/setup.sh
+# If running on lxplus or HTCondor, uncomment to setup placet etc.:
+#source /cvmfs/clicbp.cern.ch/x86_64-slc6-gcc62-opt/setup.sh
 
-placet /afs/cern.ch/work/j/jogren/TuningStudies/CLIC_FFS_380GeV/SingleBeamTuning_v07_tuned_beams/main/singlebeam_updated2_tuning_step1.tcl beam_case $1
+mkdir -p temp_run
+cd temp_run
+cp ../singlebeam_tuning_step1.tcl .
+placet singlebeam_tuning_step1.tcl beam_case $1
