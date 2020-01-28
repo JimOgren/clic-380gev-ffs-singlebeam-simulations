@@ -92,7 +92,7 @@ set gaindts $args(gaindts)
 set beam_case $args(beam_case)
 
 
-puts "Beam_case $beam_case"
+puts "Tuning step 1: Beam_case $beam_case"
 
 #############################################################################
 # load header files:
