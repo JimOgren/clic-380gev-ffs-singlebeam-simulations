@@ -121,7 +121,7 @@ source $script_dir/scripts/setup_knobs.tcl
 
 # Load machines from previous step
 #############################################################################
-load_beamline_status "test" $res_dir/Results_step1/machine_status_$machine.dat
+load_beamline_status "test" $res_dir/Results_step1/machine_status_${beam_case}.dat
 source $script_dir/scripts/check_status_single_particle.tcl
 
 # Tune sextupoles (transverse position)
@@ -142,5 +142,5 @@ source $script_dir/scripts/check_status_single_particle.tcl
 
 # Save beamline and tuning data
 #############################################################################
-save_beamline_status "test" $save_dir/machine_status_$machine.dat
-save_tuning_data $save_dir/tuning_data_$machine.dat $t_1
+save_beamline_status "test" $save_dir/machine_status_${beam_case}.dat
+save_tuning_data $save_dir/tuning_data_${beam_case}.dat $t_1
