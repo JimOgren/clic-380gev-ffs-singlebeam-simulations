@@ -22,7 +22,7 @@ iter_tot = [];
 ################################################################
 L = [];
 machines = [];
-dir_path = 'Results/Results_with_misalignments_updated2/'
+dir_path = 'Results/'
 failed = [];
 Lumi_meas = 0;
 
