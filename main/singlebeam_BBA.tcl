@@ -120,7 +120,6 @@ source $script_dir/scripts/beam_based_alignment.tcl
 
 # Procedure for misaligning the machine
 #############################################################################
-# Procedure for misaligning a machine
 proc my_survey { beamline_name } {
    global machine sigma sigmaM sigmaroll sigmak bpmres
    puts " "
