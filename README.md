@@ -13,7 +13,6 @@ The full simulation is defined in three steps. To run the whole thing:
 You need to have the tracking code PLACET and the beam-beam code GUINEA-PIG installed.
 
 ### Publication:
-The results were presented in the report:\
-"Tuning of the CLIC 380 GeV Final-Focus System with Static Imperfections", CERN-ACC-2018-0055, CLIC-Note-1141, 2018.
+The results were presented in the report:"Tuning of the CLIC 380 GeV Final-Focus System with Static Imperfections", CERN-ACC-2018-0055, CLIC-Note-1141, 2018.
 
 Written by Jim Ogren, 2018-2020, CERN, Geneva, Switzerland. 
